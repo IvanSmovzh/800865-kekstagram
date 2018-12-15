@@ -1,8 +1,8 @@
 'use strict';
 
 var OBJECT_DESK_PHOTOS = 25;
-var minLikes = 15;
-var maxLikes = 200;
+var MIN_LIKES = 15;
+var MAX_LIKES = 200;
 var picture = document.querySelector('#picture').content;
 var pictures = document.querySelector('.pictures');
 var bigPictureImg = document.querySelector('.big-picture');
@@ -17,25 +17,6 @@ var comments = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
 ];
 
-var names = {
-  firstName: [
-    'Михаил',
-    'Анастасия',
-    'Иван',
-    'Вера',
-    'Кирилл',
-    'Татьяна',
-    'Владимир',
-    'Алла',
-    'Константик',
-    'Наташа',
-    'Павел',
-    'Кристина',
-    'Данил',
-    'Жанна'
-  ]
-};
-
 /**
  * возвращает случайное число в диапазоне от до
  * @param {number} min генерирует число ОТ
@@ -45,7 +26,6 @@ var names = {
 var getRandInteger = function (min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 };
-
 
 /**
  * создает объект фотография
@@ -58,18 +38,12 @@ var generatePhotoArray = function (count) {
   for (var i = 1; i < count + 1; i++) {
     photo.push({
       url: 'photos/' + i + '.jpg',
-      likes: getRandInteger(minLikes, maxLikes),
-      names: names.firstName[getRandInteger(0, names.firstName.length)],
+      likes: getRandInteger(MIN_LIKES, MAX_LIKES),
       comments: comments[getRandInteger(0, comments.length)]
-
     });
-
   }
-
   return photo;
-
 };
-
 
 /**
  * отрисовывает фотографии
@@ -81,8 +55,6 @@ var renderPhoto = function () {
     template.querySelector('.picture__likes').textContent = value.likes;
     template.querySelector('.picture__comments').textContent = value.comments.length;
     template.querySelector('.picture__img').src = value.url;
-
-
     fragment.appendChild(template);
   });
   pictures.appendChild(fragment);
@@ -90,7 +62,6 @@ var renderPhoto = function () {
 
 document.querySelector('.social__comment-count').classList.add('visually-hidden');
 document.querySelector('.comments-loader').classList.add('visually-hidden');
-
 
 var renderBigPhoto = function (value) {
   var fragment = document.createDocumentFragment();
